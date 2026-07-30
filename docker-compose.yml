@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:18.4-alpine
+    container_name: nestjs-concepts-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-nest}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-nest}
+      POSTGRES_DB: ${POSTGRES_DB:-nest_concepts}
+    ports:
+      # Host port is deliberately non-default so a local PostgreSQL install
+      # on 5432 does not collide with this container.
+      - '55432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-nest} -d ${POSTGRES_DB:-nest_concepts}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Enabled from Wave 3 (async/ — BullMQ). Left commented until then so the
+  # default `docker compose up` stays a single container.
+  # redis:
+  #   image: redis:8-alpine
+  #   container_name: nestjs-concepts-redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - '56379:6379'
+  #   healthcheck:
+  #     test: ['CMD', 'redis-cli', 'ping']
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 10
+
+volumes:
+  postgres-data:

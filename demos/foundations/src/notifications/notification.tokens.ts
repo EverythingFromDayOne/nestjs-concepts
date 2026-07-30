@@ -1,0 +1,2 @@
+export const NOTIFICATION_TRANSPORT = Symbol('NOTIFICATION_TRANSPORT');
+export const METRICS_SINK = Symbol('METRICS_SINK');

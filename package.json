@@ -1,0 +1,17 @@
+{
+  "name": "nestjs-concepts",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Concept articles and symptom-first recipes for NestJS.",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d",
+    "check:links": "python3 scripts/check-links.py ."
+  },
+  "license": "SEE LICENSE IN LICENSE"
+}
