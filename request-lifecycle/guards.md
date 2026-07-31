@@ -36,6 +36,8 @@ export class ApiKeyGuard implements CanActivate {
 
 Truthy lets the request through. Falsy stops it. Throwing stops it *and* decides the response.
 
+**Nest ships no built-in guards.** There is no `guards/` module in `@nestjs/common` — every guard in a codebase is written by you or comes from an ecosystem package (`AuthGuard` from `@nestjs/passport`, `ThrottlerGuard` from `@nestjs/throttler`). That's a deliberate consequence of what a guard is: an authorization *decision*, which the framework cannot make on your behalf.
+
 Guards bind at the three levels from [article 09](./execution-order.md#minimal-shapes) — global (`APP_GUARD` or `useGlobalGuards`), controller (`@UseGuards()` on the class), route (`@UseGuards()` on the method) — and are evaluated in that order.
 
 The distinction from its neighbours is about information, not capability:

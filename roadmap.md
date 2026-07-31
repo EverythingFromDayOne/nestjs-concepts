@@ -65,6 +65,14 @@ The same separation applies to testing: framework-owned surfaces (`Test.createTe
 
 Numbers below are **write order**, not identity — see §6.3. They reflow when the plan changes; a renumber touches this file and `progress.md` and no article.
 
+### Prerequisite (1)
+
+| # | Slug | Owns |
+| --- | --- | --- |
+| 00 | `foundations/typescript-for-nest` | the TypeScript features whose **runtime** behaviour Nest depends on: the erasure ledger, `emitDecoratorMetadata`, `import type` versus DI, `as const` over `enum`, predicates and `asserts`, and `declare global` merging |
+
+Reads before article 01 and was written after article 17 — hence write order `00`. It exists because Nest reflects on types at runtime, so erasure is a behavioural property here rather than a compile-time detail; the traps it documents were all measured elsewhere in the corpus first.
+
 ### Wave 1 — the spine (15)
 
 `foundations/`
@@ -182,8 +190,10 @@ Target ~5 recipes per track; the number is an expectation, not a quota.
 article_id: providers-and-di   # slug, identical to the filename minus .md
 concept_folder: foundations
 wave: 1
+write_order: 01                # optional; only when it differs from reading order
 nest_baseline: "11.1.x"
 node_baseline: "24"
+typescript_baseline: "5.9.x"   # optional; only where a TS version is load-bearing
 related: [foundations/modules-and-the-module-graph, recipes/di-and-modules/circular-dependency]
 status:
   drafted: true
@@ -206,6 +216,8 @@ v12_watch: false
 ```
 
 **Id rule.** `article_id` and `recipe_id` are **kebab-case slugs identical to the filename**, never sequence numbers. They must be unique corpus-wide, not merely within a folder, so that a bare id is unambiguous in tooling and in conversation. The numbers in §4 and in `progress.md` are **ordering only** — they say what gets written when, and carry no identity. Renumbering a wave must never require touching an article.
+
+**Optional fields.** `write_order` appears only when an article was written out of reading order — article 00 is the case that forced it. `typescript_baseline` appears only where a TypeScript version is load-bearing rather than incidental.
 
 **Status.** An object, not a string: `drafted` and `reviewed` are independent booleans. An article can be drafted and unreviewed (the normal state), or — after a baseline bump invalidates it — reviewed-then-reopened without losing the record.
 

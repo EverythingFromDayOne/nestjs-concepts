@@ -42,7 +42,9 @@ export class TrimPipe implements PipeTransform<unknown, unknown> {
 | `metatype` | the parameter's runtime type, from `design:paramtypes` — or `undefined` |
 | `data` | the decorator's argument, e.g. `'id'` in `@Param('id')` |
 
-Pipes do two jobs: **transform** (a string becomes a number, a payload becomes a DTO instance) and **validate** (reject and throw). The built-ins cover the common transforms — `ParseIntPipe`, `ParseFloatPipe`, `ParseBoolPipe`, `ParseArrayPipe`, `ParseUUIDPipe`, `ParseEnumPipe`, `DefaultValuePipe` — and `ValidationPipe` covers validation, whose configuration belongs to [article 17](../validation/validationpipe-in-depth.md).
+Pipes do two jobs: **transform** (a string becomes a number, a payload becomes a DTO instance) and **validate** (reject and throw). `@nestjs/common` ships **ten**, enumerated from `packages/common/pipes/index.ts` @ v11.1.28 so the list is complete rather than remembered: `ValidationPipe`, `ParseIntPipe`, `ParseFloatPipe`, `ParseBoolPipe`, `ParseArrayPipe`, `ParseUUIDPipe`, `ParseEnumPipe`, `ParseDatePipe`, `DefaultValuePipe`, and `ParseFilePipe`. `ValidationPipe`'s configuration belongs to [article 17](../validation/validationpipe-in-depth.md).
+
+`ParseFilePipe` is the odd one out and worth flagging early: it doesn't coerce a scalar, it validates an **uploaded file object** against a list of `FileValidator`s. It only makes sense alongside `FileInterceptor`, so §API reference records the surface and the walkthrough leaves it alone.
 
 Four binding levels, one more than the other enhancers: global, controller, route, and **parameter**.
 
@@ -400,7 +402,11 @@ curl -X POST localhost:3000/pipeline/items -H 'content-type: application/json' \
 | `ParseIntPipe` `ParseFloatPipe` `ParseBoolPipe` | `@nestjs/common` | primitive coercion |
 | `ParseArrayPipe` | `@nestjs/common` | comma-separated or repeated values, with `items` |
 | `ParseUUIDPipe` `ParseEnumPipe` | `@nestjs/common` | format and membership checks |
+| `ParseDatePipe` | `@nestjs/common` | string → `Date`; `optional` and `default` options |
 | `DefaultValuePipe` | `@nestjs/common` | substitute a value for `undefined`/`null` — put it first |
+| `ParseFilePipe` | `@nestjs/common` | validates an **uploaded file**, not a scalar; takes `validators`, `fileIsRequired`, `errorHttpStatusCode` |
+| `ParseFilePipeBuilder` | `@nestjs/common` | fluent construction: `.addMaxSizeValidator().addFileTypeValidator().build()` |
+| `MaxFileSizeValidator` `FileTypeValidator` | `@nestjs/common` | the two built-in `FileValidator`s; implement the interface for your own |
 
 ## Common mistakes
 

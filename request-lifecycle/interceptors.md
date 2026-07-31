@@ -36,6 +36,8 @@ export class NoopInterceptor implements NestInterceptor {
 
 Code before `return` is the pre-phase. Operators piped onto `next.handle()` are the post-phase. `next.handle()` itself is the rest of the chain — the inner interceptors, then the pipes, then the handler.
 
+**Nest ships exactly one built-in interceptor.** `@nestjs/common` has no `interceptors/` barrel at all — `ClassSerializerInterceptor` lives under `serializer/`, and that's the entire list at v11.1.28. `CacheInterceptor` is in `@nestjs/cache-manager`, and everything else you've seen named as an interceptor is either ecosystem or hand-written. So unlike pipes and exceptions, this is a layer where you write essentially all of them yourself — which is why the rest of this article is about the mechanism rather than a catalogue.
+
 Four jobs, one operator each:
 
 | Job | Operator |

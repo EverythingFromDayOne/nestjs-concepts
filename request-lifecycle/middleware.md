@@ -49,6 +49,8 @@ export class PipelineModule implements NestModule {
 }
 ```
 
+**Nest ships no built-in middleware.** There is no middleware catalogue in `@nestjs/common` — the layer is the adapter's, so the ecosystem is Express's (`helmet`, `cors`, `compression`, `express-rate-limit`) plus whatever you write. The one exception is CORS, which Nest exposes as a first-class option rather than as middleware: `NestFactory.create(AppModule, { cors: true })` or `app.enableCors(options)`, which configures the adapter directly.
+
 **What middleware uniquely can do**, per [article 09](./execution-order.md#how-it-works-under-the-hood):
 
 - See requests that a guard rejects. It runs before guards, so it's the only layer that observes the 401s and 403s.

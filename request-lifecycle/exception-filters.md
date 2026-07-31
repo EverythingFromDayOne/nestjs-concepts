@@ -480,6 +480,28 @@ The third one is the check people never think to run, and it's the one that tell
 | `HttpAdapterHost` | `@nestjs/core` | the adapter, when you need `isHeadersSent`/`reply` directly |
 | `IntrinsicException` | `@nestjs/common` | suppresses the default error log |
 
+### The 21 built-in exceptions
+
+Enumerated from `packages/common/exceptions/index.ts` @ v11.1.28, so this is the complete set rather than the handful everyone reuses. All extend `HttpException`, all accept `(message?, options?)`, and all give you the status without a magic number — which matters because `getResponse()` returning an object is what lets them carry a machine-readable body ([§How it works](#what-the-built-in-filter-actually-does)).
+
+| Status | Exception | Status | Exception |
+| --- | --- | --- | --- |
+| 400 | `BadRequestException` | 415 | `UnsupportedMediaTypeException` |
+| 401 | `UnauthorizedException` | 418 | `ImATeapotException` |
+| 403 | `ForbiddenException` | 421 | `MisdirectedException` |
+| 404 | `NotFoundException` | 422 | `UnprocessableEntityException` |
+| 405 | `MethodNotAllowedException` | 500 | `InternalServerErrorException` |
+| 406 | `NotAcceptableException` | 501 | `NotImplementedException` |
+| 408 | `RequestTimeoutException` | 502 | `BadGatewayException` |
+| 409 | `ConflictException` | 503 | `ServiceUnavailableException` |
+| 410 | `GoneException` | 504 | `GatewayTimeoutException` |
+| 412 | `PreconditionFailedException` | 505 | `HttpVersionNotSupportedException` |
+| 413 | `PayloadTooLargeException` | | |
+
+Plus `HttpException` itself for a status with no dedicated class, and `IntrinsicException` — which is not a status at all but the marker that suppresses the default error log.
+
+The ones worth knowing exist because they're reached for too rarely: **412 `PreconditionFailed`** for optimistic-concurrency conflicts on `If-Match`, **422 `UnprocessableEntity`** for a well-formed body that fails a *business* rule rather than a shape rule, and **503 `ServiceUnavailable`** for a dependency being down — which is the honest status during a [graceful shutdown](../observability/graceful-shutdown.md) drain, rather than letting requests fail as 500s.
+
 ## Common mistakes
 
 **1. A global `@Catch()` that doesn't delegate or log.** `super.catch()` never runs, so the framework's 500 logging disappears and the app looks healthier than it is.
