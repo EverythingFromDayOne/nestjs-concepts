@@ -1,5 +1,6 @@
 ---
 article_id: providers-and-di
+description: Nest injects tokens, not types, so every resolution error is a wrong token or a module that cannot see it
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

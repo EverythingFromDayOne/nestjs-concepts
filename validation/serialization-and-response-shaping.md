@@ -1,5 +1,6 @@
 ---
 article_id: serialization-and-response-shaping
+description: Serialization is the direction where a mistake leaks rather than rejects, and Exclude gives false confidence three ways
 concept_folder: validation
 wave: 2
 nest_baseline: "11.1.x"

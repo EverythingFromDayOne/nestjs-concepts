@@ -1,5 +1,6 @@
 ---
 article_id: middleware
+description: Middleware is the adapter's layer, wrapped just enough to reach filters and inject providers, and every limit follows
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"

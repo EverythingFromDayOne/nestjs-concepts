@@ -1,5 +1,6 @@
 ---
 article_id: controllers-and-routing
+description: There is no routing table — precedence emerges from declaration order, which is why a shadowed route raises no error
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"
