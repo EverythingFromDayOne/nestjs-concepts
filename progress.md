@@ -235,6 +235,7 @@ Generated from `v12_watch: true` frontmatter. Populated as articles are written.
 
 | Date | Session | Outcome |
 | --- | --- | --- |
+| 2026-08-16 | `description` frontmatter pass | Mechanical cross-repo pass from `prompts/description-pass.md`: a one-sentence `description` dek added immediately after `article_id` in all **19** article files — 19 insertions, 0 deletions, no prose touched, every frontmatter block still parses and every `status` object survived intact. `check:links` reports the same 59 broken links before and after, all pre-existing forward references to queued files. One new debt surfaced: `validation/dtos-and-class-validator.md` is 🟢 in this tracker but **absent from the repo** — the article-08 failure mode repeating, and three articles link to it, so it got no dek because there is no file. |
 | 2026-07-29 | Kickoff | Baseline decisions settled (Nest 11.1.x, Node 24, Express 5, TypeORM 1.1 + PG 18, Jest, REST-only, bounded Angular callouts). `roadmap.md` + `progress.md` drafted. Nothing else written. |
 | 2026-07-29 | Article 01 | `foundations/providers-and-di.md` drafted against official docs + v11.1.28 injector source. Opened the v12 watch rollup and the cross-link debt. |
 | 2026-07-29 | Scaffold landed | Cursor scaffolded the repo. Deviations accepted: `packageManager` pinned to the installed pnpm 10.33.0; `postgres:18.4-alpine` confirmed present on Docker Hub but **not pulled** — Docker Desktop wouldn't start, so items 3–4 of the acceptance list are still open. Node 24 not yet installed locally. |
