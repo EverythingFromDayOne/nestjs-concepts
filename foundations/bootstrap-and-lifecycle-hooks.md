@@ -1,5 +1,6 @@
 ---
 article_id: bootstrap-and-lifecycle-hooks
+description: The port is bound only after every bootstrap hook resolves, and shutdown hooks do not run until you opt in
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

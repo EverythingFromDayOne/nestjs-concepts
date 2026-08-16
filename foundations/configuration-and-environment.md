@@ -1,5 +1,6 @@
 ---
 article_id: configuration-and-environment
+description: Config is the only untyped, unvalidated, externally supplied input, so convert and validate all of it once, at boot
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

@@ -1,5 +1,6 @@
 ---
 article_id: decorators-and-metadata-reflection
+description: Decorators annotate and the framework behaves, so a decorator that does nothing wrote the wrong key or the wrong target
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

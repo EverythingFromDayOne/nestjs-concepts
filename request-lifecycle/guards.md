@@ -1,5 +1,6 @@
 ---
 article_id: guards
+description: A guard runs before validation, so the body it reads is raw input and returning false always renders as 403
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"

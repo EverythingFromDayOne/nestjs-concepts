@@ -1,5 +1,6 @@
 ---
 article_id: validationpipe-in-depth
+description: Three of ValidationPipe's defaults are the opposite of its reputation, starting with transform being off
 concept_folder: validation
 wave: 2
 nest_baseline: "11.1.x"

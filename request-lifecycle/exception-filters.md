@@ -1,5 +1,6 @@
 ---
 article_id: exception-filters
+description: Filters are the only layer where exactly one participant runs, so adding a filter can mean removing another
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"

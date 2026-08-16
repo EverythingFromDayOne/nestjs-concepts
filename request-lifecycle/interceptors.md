@@ -1,5 +1,6 @@
 ---
 article_id: interceptors
+description: The handler arrives as a deferred observable, so an interceptor holds the decision to invoke it at all
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"

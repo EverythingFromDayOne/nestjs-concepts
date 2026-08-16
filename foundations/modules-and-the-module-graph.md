@@ -1,5 +1,6 @@
 ---
 article_id: modules-and-the-module-graph
+description: A module is a visibility boundary with an identity, and those two properties are enforced by different mechanisms
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

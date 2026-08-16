@@ -1,5 +1,6 @@
 ---
 article_id: execution-context-and-reflector
+description: The execution context is a typed view over one arguments array, so switching it to the wrong transport fails silently
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"

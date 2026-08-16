@@ -1,5 +1,6 @@
 ---
 article_id: typescript-for-nest
+description: Type erasure is a runtime property in Nest, because the framework reads your types back through reflection
 concept_folder: foundations
 wave: 1
 write_order: 00

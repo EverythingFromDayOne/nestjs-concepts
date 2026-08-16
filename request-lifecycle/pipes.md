@@ -1,5 +1,6 @@
 ---
 article_id: pipes
+description: A pipe sees one argument and learns its type from emitted metadata, so an interface DTO disables validation silently
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"

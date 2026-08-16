@@ -1,5 +1,6 @@
 ---
 article_id: scopes-and-lifetimes
+description: Scope belongs to a dependency tree, declared in one place and taking effect upward through everything that injects it
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

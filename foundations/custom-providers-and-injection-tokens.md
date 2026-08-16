@@ -1,5 +1,6 @@
 ---
 article_id: custom-providers-and-injection-tokens
+description: Four provider forms collapse into one runtime decision, construct the class or call the factory and await it
 concept_folder: foundations
 wave: 1
 nest_baseline: "11.1.x"

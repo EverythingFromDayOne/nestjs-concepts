@@ -1,5 +1,6 @@
 ---
 article_id: persistence-boundaries
+description: Your ORM already gives you a repository, so a second one buys only changeability, and the real boundary is the transaction
 concept_folder: data
 wave: 2
 nest_baseline: "11.1.x"

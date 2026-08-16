@@ -1,5 +1,6 @@
 ---
 article_id: execution-order
+description: The pipeline is a nesting rather than a list, so guards sit outside the interceptor chain and pipes run inside it
 concept_folder: request-lifecycle
 wave: 1
 nest_baseline: "11.1.x"
