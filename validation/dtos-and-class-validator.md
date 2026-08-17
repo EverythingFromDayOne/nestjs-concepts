@@ -1,5 +1,6 @@
 ---
 article_id: dtos-and-class-validator
+description: A DTO is not a type but a runtime object carrying metadata, so a nested property without @Type passes ValidationPipe silently
 concept_folder: validation
 wave: 2
 nest_baseline: "11.1.x"
