@@ -19,7 +19,7 @@ v12_watch: true
 
 # ValidationPipe in depth
 
-> **Lead with this.** Three of `ValidationPipe`'s defaults are the opposite of what almost everyone assumes, and each one has teeth. **`transform` is `false`** — so by default your handler receives a plain object, not a DTO instance, and `class-transformer`'s work is thrown away. **`forbidUnknownValues` is forced to `false`** by Nest itself, overriding `class-validator`'s own default — which silently re-enables the nested-`@Type()` bypass: measured, a `@ValidateNested()` property with no `@Type()` passes validation with **zero errors** through the pipe, while the same DTO validated directly is rejected. And with `transform: true`, a numeric query parameter is coerced with `+value`, so `?page=abc` reaches your handler as **`NaN`** with no error at all. This article is mostly about which options to turn on and what each one costs, but those three are why the defaults are not a starting point.
+> **Lead with this.** Three of `ValidationPipe`'s defaults are the opposite of what almost everyone assumes, and each one has teeth. **`transform` is `false`** — so by default your handler receives a plain object, not a DTO instance, and `class-transformer`'s work is thrown away. **`forbidUnknownValues` is seeded to `false`** by Nest itself since `@nestjs/common` 9.3.2, overriding `class-validator`'s own default — which silently re-enables the nested-`@Type()` bypass: measured, a `@ValidateNested()` property with no `@Type()` passes validation with **zero errors** through the pipe, while the same DTO validated directly is rejected. The seed is overridable: `new ValidationPipe({ forbidUnknownValues: true })` restores the library behaviour. And with `transform: true`, a numeric query parameter is coerced with `+value`, so `?page=abc` reaches your handler as **`NaN`** with no error at all. This article is mostly about which options to turn on and what each one costs, but those three are why the defaults are not a starting point.
 
 ## What it is
 
@@ -96,7 +96,7 @@ Seven things worth naming.
 
 That middle row is decided by `Object.keys(this.validatorOptions).length > 1`, with a source comment explaining the `> 1`: `forbidUnknownValues` always occupies one slot, so "more than one key" is the proxy for "the user passed something." The practical upshot is blunt — **`new ValidationPipe()` with no options validates but strips nothing and transforms nothing.** Whitelisting only reaches your handler if you asked for at least one option.
 
-### `forbidUnknownValues` is forced off
+### `forbidUnknownValues` is seeded, not forced
 
 ```typescript
 // paraphrased — the constructor
@@ -104,7 +104,9 @@ That middle row is decided by `Object.keys(this.validatorOptions).length > 1`, w
 this.validatorOptions = { forbidUnknownValues: false, ...validatorOptions };
 ```
 
-`class-validator` has defaulted this to `true` since 0.14, meaning it rejects objects whose constructor carries no metadata. Nest turns it back off, for compatibility reasons recorded in that issue. Measured consequences, same DTO both ways:
+The spread comes **after** the literal. A caller passing `new ValidationPipe({ forbidUnknownValues: true })` gets `true`. Nest has seeded this default since `@nestjs/common` 9.3.2.
+
+`class-validator` has defaulted this to `true` since 0.14.0 — unconditionally since 0.14.2, when a bare `validate(obj)` started rejecting too — meaning it rejects objects whose constructor carries no metadata. Nest seeds it back to `false`, for compatibility reasons recorded in that issue. Measured consequences, same DTO both ways:
 
 | Case | validated directly | through `ValidationPipe` |
 | --- | --- | --- |
@@ -115,6 +117,10 @@ this.validatorOptions = { forbidUnknownValues: false, ...validatorOptions };
 So inside a Nest application the folk wisdom is correct: **a nested DTO with no `@Type()` is not validated at all.** Invalid nested data reaches the handler silently. That is a validation bypass, not a cosmetic issue, and it's the strongest argument in the corpus for the `@Type()`-on-every-nested-property rule.
 
 You can set `forbidUnknownValues: true` explicitly. Do it deliberately: it also makes the pipe reject anything else it can't find metadata for, which is the behaviour you want and may surface payloads that used to pass.
+
+### Commonly confused with `whitelist` / `forbidNonWhitelisted`
+
+`forbidUnknownValues` is not a check on extra properties. It fires when the target carries no validation metadata at all — an undecorated class, or a `groups` selection matching no constraint. Rejecting extra properties is `whitelist` plus `forbidNonWhitelisted`, a separate mechanism; the whitelist interaction is [article 16 §Step 4](./dtos-and-class-validator.md#step-4--the-whitelist-interaction). The name invites the confusion, and setting `forbidUnknownValues: true` expecting extra fields to be rejected will produce no such behaviour.
 
 ### `transformPrimitive` coerces without validating
 
@@ -374,7 +380,7 @@ That single `curl` is the highest-value validation check in the corpus — it ca
 | `transform` | `false` | return the class instance; enables `transformPrimitive` for named params |
 | `whitelist` | `false` | keep only properties with a **validation** decorator |
 | `forbidNonWhitelisted` | `false` | 400 instead of silently stripping |
-| `forbidUnknownValues` | **`false`** (Nest overrides class-validator) | reject values with no metadata — closes the nested bypass |
+| `forbidUnknownValues` | **`false`** (Nest seeds this since `@nestjs/common` 9.3.2; caller options override) | reject values with no metadata — closes the nested bypass |
 | `skipMissingProperties` | `false` | skip validation for absent properties |
 | `skipNullProperties` / `skipUndefinedProperties` | `false` | narrower versions of the above |
 | `stopAtFirstError` | `false` | one constraint message per property |
@@ -394,7 +400,7 @@ That single `curl` is the highest-value validation check in the corpus — it ca
 
 **2. Assuming `instanceof` works.** Only with `transform: true`.
 
-**3. Relying on `class-validator`'s `forbidUnknownValues` default.** Nest forces it to `false`, which silently disables validation for nested properties missing `@Type()`.
+**3. Relying on `class-validator`'s `forbidUnknownValues` default.** Since `@nestjs/common` 9.3.2 the pipe seeds it to `false`, which silently disables validation for nested properties missing `@Type()`. Pass `forbidUnknownValues: true` if you want the library behaviour.
 
 **4. `?flag=1` meaning true.** `transformPrimitive` only accepts `'true'`. Everything else is `false`.
 
@@ -412,7 +418,7 @@ That single `curl` is the highest-value validation check in the corpus — it ca
 
 ## How this evolved
 
-The consequential history here is one line: `forbidUnknownValues: false` was added to Nest's constructor to work around breakage after `class-validator` 0.14 flipped its own default, with the issue linked in the source. That workaround is still present at 11.1.28, which is why the nested-`@Type()` bypass exists *inside Nest* and not outside it. `stripProtoKeys` grew from a flat delete into a recursive walk with a built-in-types exclusion list, after it interfered with fake timers in tests. And `toEmptyIfNil` plus the empty-string fallbacks are accommodations for SWC's compilation of nil values — the kind of detail that explains an otherwise inexplicable branch.
+The consequential history here is one line: since `@nestjs/common` 9.3.2, `forbidUnknownValues: false` has been seeded in Nest's constructor to work around breakage after `class-validator` 0.14.0 flipped its own default (unconditional since 0.14.2), with the issue linked in the source. That seed is still present at 11.1.28, which is why the nested-`@Type()` bypass exists *inside Nest* and not outside it — unless you override it. `stripProtoKeys` grew from a flat delete into a recursive walk with a built-in-types exclusion list, after it interfered with fake timers in tests. And `toEmptyIfNil` plus the empty-string fallbacks are accommodations for SWC's compilation of nil values — the kind of detail that explains an otherwise inexplicable branch.
 
 Nest 12's **Standard Schema** support in `@Body()`/`@Query()` is an alternative route past all of this: a Zod or Valibot schema is a runtime value, so there is no metatype to reflect, no `@Type()` to forget, and no `forbidUnknownValues` question. Documented as an addition, with `class-validator` staying the default. Re-verify this article at GA.
 
@@ -428,7 +434,7 @@ Nest 12's **Standard Schema** support in `@Body()`/`@Query()` is an alternative 
 
 - **`transform` defaults to `false`.** The handler gets a plain object; `instanceof` fails.
 - With `transform: false`, the return value depends on whether you passed **any other option** — original value if not, `classToPlain(entity)` if so. So stripping only reaches your handler when at least one option is set.
-- **Nest forces `forbidUnknownValues: false`**, overriding `class-validator`. Measured: a `@ValidateNested()` property with no `@Type()` **passes with no errors** through the pipe, and is rejected when validated directly.
+- Since `@nestjs/common` 9.3.2, **`ValidationPipe` seeds `forbidUnknownValues: false`**, overriding `class-validator`'s default (`true` since 0.14.0, unconditionally since 0.14.2). The seed is overridable. Measured: a `@ValidateNested()` property with no `@Type()` **passes with no errors** through the pipe, and is rejected when validated directly.
 - `transformPrimitive` coerces named `@Param`/`@Query` values **without validating**: `'true'` only for booleans, `+value` for numbers, so `?page=abc` is `NaN`.
 - `toEmptyIfNil` turns a missing body into `{}` so required-field errors are reported.
 - `stripProtoKeys` recursively deletes `__proto__`, `prototype`, and `constructor` — free prototype-pollution defence.
@@ -447,7 +453,7 @@ Nest 12's **Standard Schema** support in `@Body()`/`@Query()` is an alternative 
 ## References
 
 - [Validation](https://docs.nestjs.com/techniques/validation) — official docs
-- [`packages/common/pipes/validation.pipe.ts` @ v11.1.28](https://github.com/nestjs/nest/blob/v11.1.28/packages/common/pipes/validation.pipe.ts) — the constructor's `forbidUnknownValues: false`, the three return paths, `transformPrimitive`, `stripProtoKeys`, and `flattenValidationErrors`
+- [`packages/common/pipes/validation.pipe.ts` @ v11.1.28](https://github.com/nestjs/nest/blob/v11.1.28/packages/common/pipes/validation.pipe.ts) — the constructor's `forbidUnknownValues: false` seed (present since `@nestjs/common` 9.3.2), the three return paths, `transformPrimitive`, `stripProtoKeys`, and `flattenValidationErrors`
 - [nestjs/nest#10683](https://github.com/nestjs/nest/issues/10683) — the issue the `forbidUnknownValues` override cites
 - [`class-validator` validator options](https://www.npmjs.com/package/class-validator) — the forwarded options
 
