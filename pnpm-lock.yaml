@@ -6,7 +6,23 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@nestjs/common':
+        specifier: 11.2.1
+        version: 11.2.1(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)
+      class-transformer:
+        specifier: 0.5.1
+        version: 0.5.1
+      class-validator:
+        specifier: 0.15.1
+        version: 0.15.1
+      reflect-metadata:
+        specifier: 0.2.2
+        version: 0.2.2
+      rxjs:
+        specifier: 7.8.1
+        version: 7.8.1
 
   demos/foundations:
     dependencies:
@@ -569,6 +585,19 @@ packages:
 
   '@nestjs/common@11.1.28':
     resolution: {integrity: sha512-bRImsxibie+AM7xjdwcrm/gr5YeacI65kSBNzTufa1Ib5iwziaY/lqMtRh9THq6pbV4e1HP9aI2ZxGUumnmaoQ==}
+    peerDependencies:
+      class-transformer: '>=0.4.1'
+      class-validator: '>=0.13.2'
+      reflect-metadata: ^0.1.12 || ^0.2.0
+      rxjs: ^7.1.0
+    peerDependenciesMeta:
+      class-transformer:
+        optional: true
+      class-validator:
+        optional: true
+
+  '@nestjs/common@11.2.1':
+    resolution: {integrity: sha512-SEgtP+M9DqNhQkgJIlJ3oTp3gemo/8owySovzMGmJj2kcfIH1G6QP45AAb8dE4a3IpVicpUvdDAy7Syk7ebjBw==}
     peerDependencies:
       class-transformer: '>=0.4.1'
       class-validator: '>=0.13.2'
@@ -3289,6 +3318,21 @@ snapshots:
       load-esm: 1.0.3
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
+      tslib: 2.8.1
+      uid: 2.0.2
+    optionalDependencies:
+      class-transformer: 0.5.1
+      class-validator: 0.15.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@nestjs/common@11.2.1(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)':
+    dependencies:
+      file-type: 21.3.4
+      iterare: 1.2.1
+      load-esm: 1.0.3
+      reflect-metadata: 0.2.2
+      rxjs: 7.8.1
       tslib: 2.8.1
       uid: 2.0.2
     optionalDependencies:
