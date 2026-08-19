@@ -97,7 +97,7 @@ A plain interface-and-annotation file runs fine. But **parameter properties** �
 
 ### `verbatimModuleSyntax` doesn't apply to this baseline
 
-The flag that *forces* `import type` where it's needed is `verbatimModuleSyntax` (TypeScript 5.0). Measured against our own `tsconfig.base.json`:
+The flag that *requires* `import type` where it's needed is `verbatimModuleSyntax` (TypeScript 5.0). Measured against our own `tsconfig.base.json`:
 
 ```
 error TS1484: 'Customer' is a type and must be imported using a type-only
@@ -186,7 +186,7 @@ The usual front-end advice — prefer `type`, or prefer `interface`, or use whic
 | `interface` | contracts between your own code — a service's port, a strategy's shape, a repository interface paired with a symbol token |
 | `type` | unions, tuples, function types, mapped and conditional types — everything `interface` can't express |
 
-The consequence of getting the first row wrong, measured in [article 13](../request-lifecycle/pipes.md#step-4--the-interface-trap-demonstrated) and [article 17](../validation/validationpipe-in-depth.md#forbidunknownvalues-is-forced-off):
+The consequence of getting the first row wrong, measured in [article 13](../request-lifecycle/pipes.md#step-4--the-interface-trap-demonstrated) and [article 17](../validation/validationpipe-in-depth.md#forbidunknownvalues-is-seeded-not-forced):
 
 ```typescript
 export interface CreateItemDto { name: string; quantity: number }
@@ -360,7 +360,7 @@ Three details that decide whether it works:
 - **A file containing any top-level `import`/`export` is a module**, so the augmentation must be wrapped in `declare global`. Without a top-level import or export the file is a script and you can declare `namespace Express` directly — the wrapper is what people usually miss.
 - **The file must be inside `tsconfig.json`'s `include`.** It's never imported by anything, so if it falls outside `include` it silently does nothing and every property is an error again.
 
-Mark the properties **optional** (`?`). Middleware sets `correlationId` and a guard sets `user`, so on any given request they may genuinely be absent — and an optional property forces the `?.` that reflects reality.
+Mark the properties **optional** (`?`). Middleware sets `correlationId` and a guard sets `user`, so on any given request they may genuinely be absent — and an optional property requires the `?.` that reflects reality.
 
 The same technique types other people's runtime objects. `process.env` is the other one worth doing:
 
@@ -514,7 +514,7 @@ Nest 12's ESM move touches every flag here, and its **Standard Schema** support 
 - [Decorators and metadata reflection](./decorators-and-metadata-reflection.md#how-it-works-under-the-hood) — the measured emission behaviour this article summarises
 - [Pipes](../request-lifecycle/pipes.md#metatype-is-the-emitted-paramtype-and-thats-the-trap) — `metatype`, and the interface trap
 - [DTOs and class-validator](../validation/dtos-and-class-validator.md) — why a DTO must be a class
-- [ValidationPipe in depth](../validation/validationpipe-in-depth.md#forbidunknownvalues-is-forced-off) — how the trap becomes a silent bypass
+- [ValidationPipe in depth](../validation/validationpipe-in-depth.md#forbidunknownvalues-is-seeded-not-forced) — how the trap becomes a silent bypass
 - [Middleware](../request-lifecycle/middleware.md#step-1--a-correlation-id-and-why-it-has-to-be-here) — the request property this article finally types
 - [Configuration and environment](./configuration-and-environment.md#step-3--fail-the-boot-not-the-request) — the runtime check behind a `ProcessEnv` augmentation
 

@@ -20,7 +20,7 @@ v12_watch: true
 
 # DTOs and class-validator
 
-> **Lead with this.** A DTO is not a type. It's a **runtime object carrying metadata**, and that is the only reason validation can exist at all — so every rule in this article is about what survives compilation and what `class-transformer` actually builds, never about what TypeScript believes. One measured fact anchors it, and it depends on **who calls the validator**. Validated directly, a nested object without `@Type(() => X)` is rejected — with a useless message, but rejected. Validated **through `ValidationPipe`**, the same DTO **passes with zero errors**, because Nest forces `forbidUnknownValues` to `false`. So inside a Nest application the folk warning is correct and it is a real validation bypass: invalid nested data reaches your handler silently. `@Type(() => X)` on every nested property is not a formality — it is the thing standing between the handler and unchecked input. The mechanism is [article 17](./validationpipe-in-depth.md#forbidunknownvalues-is-forced-off).
+> **Lead with this.** A DTO is not a type. It's a **runtime object carrying metadata**, and that is the only reason validation can exist at all — so every rule in this article is about what survives compilation and what `class-transformer` actually builds, never about what TypeScript believes. One measured fact anchors it, and it depends on **who calls the validator**. Validated directly, a nested object without `@Type(() => X)` is rejected — with a useless message, but rejected. Validated **through `ValidationPipe`**, the same DTO **passes with zero errors**, because since `@nestjs/common` 9.3.2 the pipe seeds `forbidUnknownValues: false` as an overridable default. So inside a Nest application the folk warning is correct and it is a real validation bypass: invalid nested data reaches your handler silently. `@Type(() => X)` on every nested property is not a formality — it is the thing standing between the handler and unchecked input. The mechanism is [article 17](./validationpipe-in-depth.md#forbidunknownvalues-is-seeded-not-forced).
 
 ## What it is
 
@@ -77,9 +77,9 @@ validateSync({ anything: 1 })
 → [{ constraints: { unknownValue: 'an unknown value was passed to the validate function' } }]
 ```
 
-Measured on 0.15.1. `forbidUnknownValues` defaults to **true**, so `class-validator` **on its own** fails closed on anything whose constructor has no registered rules.
+Measured on 0.15.1. Since 0.14.0 — unconditionally since 0.14.2 — `forbidUnknownValues` defaults to **true**, so `class-validator` **on its own** fails closed on anything whose constructor has no registered rules.
 
-**Nest turns that off.** `ValidationPipe`'s constructor sets `forbidUnknownValues: false` unless you override it — verified in [article 17](./validationpipe-in-depth.md#forbidunknownvalues-is-forced-off) — so none of the fail-closed behaviour below applies on the request path by default:
+**On the request path, that fail-closed default is not in effect.** Since `@nestjs/common` 9.3.2, `ValidationPipe` seeds `forbidUnknownValues: false` unless you override it — [article 17](./validationpipe-in-depth.md#forbidunknownvalues-is-seeded-not-forced) owns how — so none of the fail-closed behaviour below applies through the pipe by default:
 
 | Value | validated directly | through `ValidationPipe` |
 | --- | --- | --- |
@@ -88,7 +88,7 @@ Measured on 0.15.1. `forbidUnknownValues` defaults to **true**, so `class-valida
 
 The fail-closed behaviour is real and useful where *you* call the validator — config validation in [article 07](../foundations/configuration-and-environment.md), a queue payload, a webhook body. On an HTTP request it isn't there unless you ask for it.
 
-(On `class-validator` before 0.14 the default was the other way, and unknown values passed silently. Advice written against those versions is where the "nested validation silently passes" folklore comes from.)
+(On `class-validator` before 0.14.0 the default was the other way, and unknown values passed silently. The default became unconditional in 0.14.2. Advice written against those versions is where the "nested validation silently passes" folklore comes from.)
 
 ### `@ValidateNested()` without `@Type()` fails uselessly
 
@@ -109,7 +109,7 @@ Read the difference carefully — and then read the next paragraph, because it c
 - Without `@Type()`, `plainToInstance` leaves the nested value a plain object, so its constructor has no metadata, so the nested validation reports `unknownValue`. The child error has **no `property` field at all** — any formatter mapping `children` by property emits `undefined`.
 - With `@Type()`, `class-transformer` constructs the nested class, its metadata is reachable, and you get `city must be a string`.
 
-**Through `ValidationPipe`, the first case doesn't fail at all.** `forbidUnknownValues: false` means an unknown nested value is simply not an error — measured, `[]`. So on the request path the missing `@Type()` is a **silent bypass**, and the `unknownValue` error above is only what you'd see validating the DTO yourself in a test. That asymmetry is worth internalising: **your DTO spec can pass while the endpoint accepts garbage.**
+**Through `ValidationPipe`, the first case doesn't fail at all.** Since `@nestjs/common` 9.3.2 the pipe seeds `forbidUnknownValues: false`, so an unknown nested value is simply not an error — measured, `[]`. So on the request path the missing `@Type()` is a **silent bypass**, and the `unknownValue` error above is only what you'd see validating the DTO yourself in a test. That asymmetry is worth internalising: **your DTO spec can pass while the endpoint accepts garbage.**
 
 `@Type(() => Address)` is what makes `class-transformer` construct the nested class. It isn't decoration; it's the instruction that makes nested metadata reachable.
 
@@ -377,7 +377,7 @@ Note `import 'reflect-metadata'` — outside a Nest bootstrap nothing has loaded
 
 **1. An `interface` or `type` instead of a `class`.** No metadata, `ValidationPipe` skips it entirely, endpoint accepts anything. [Article 13](../request-lifecycle/pipes.md#step-4--the-interface-trap-demonstrated) covers the mechanism.
 
-**2. `@ValidateNested()` without `@Type()`.** Through `ValidationPipe` this is a **silent bypass** — measured, no errors at all, because Nest forces `forbidUnknownValues: false`. Validated directly it's rejected with an unusable message. So a DTO spec can be green while the endpoint accepts anything nested.
+**2. `@ValidateNested()` without `@Type()`.** Through `ValidationPipe` this is a **silent bypass** — measured, no errors at all, because since `@nestjs/common` 9.3.2 the pipe seeds `forbidUnknownValues: false`. Validated directly it's rejected with an unusable message. So a DTO spec can be green while the endpoint accepts anything nested.
 
 **3. `@IsString()` on an array.** Asserts the array is a string. Add `{ each: true }`.
 
@@ -397,7 +397,7 @@ Note `import 'reflect-metadata'` — outside a Nest bootstrap nothing has loaded
 
 ## How this evolved
 
-The consequential change is `forbidUnknownValues`, which **flipped to `true` by default in `class-validator` 0.14** — and which **Nest then explicitly turned back off** inside `ValidationPipe`, citing the breakage that flip caused. The result is a split brain: `class-validator` fails closed, Nest's pipe does not, and which behaviour you observe depends on which one invoked the validation. That is the whole explanation for why advice on nested validation is so inconsistent, and it's worth checking both your lockfile and your pipe options before trusting any tutorial on this subject.
+The consequential change is `forbidUnknownValues`, which **flipped to `true` by default in `class-validator` 0.14.0** — and became **unconditional in 0.14.2**. Since `@nestjs/common` 9.3.2, `ValidationPipe` has seeded the option back to `false` (overridable — [article 17](./validationpipe-in-depth.md#forbidunknownvalues-is-seeded-not-forced)), citing the breakage that flip caused. The result is a split brain: `class-validator` fails closed, Nest's pipe does not unless you override it, and which behaviour you observe depends on which one invoked the validation. That is the whole explanation for why advice on nested validation is so inconsistent, and it's worth checking both your lockfile and your pipe options before trusting any tutorial on this subject.
 
 `@nestjs/mapped-types` was also split out so `PartialType` and friends don't require pulling in Swagger.
 
@@ -415,7 +415,7 @@ The largest change ahead is Nest 12's **Standard Schema** support in `@Body()` a
 
 - A DTO is a **class**, because metadata registers against the constructor and `class-validator` looks it up from `value.constructor`.
 - `class-transformer` builds the instance; `class-validator` checks it. Both are needed, in that order.
-- `forbidUnknownValues` defaults **true** in `class-validator` 0.15.1 — but **`ValidationPipe` forces it to `false`**. So the validator fails closed only where you call it yourself.
+- `forbidUnknownValues` defaults **true** in `class-validator` 0.15.1 — since 0.14.0, unconditionally since 0.14.2 — but since `@nestjs/common` 9.3.2 **`ValidationPipe` seeds it to `false`**. So the validator fails closed only where you call it yourself, unless you override the pipe.
 - `@ValidateNested()` without `@Type()` is therefore a **silent bypass on the request path** (measured: no errors), and an unusable `unknownValue` error when validated directly. Your DTO spec can pass while the endpoint accepts garbage.
 - `{ each: true }` applies a validator to array **elements**; without it the array itself is validated.
 - `@IsOptional()` skips **all** validators on `null` as well as `undefined`. `@ValidateIf` is what you want when `null` has rules.
