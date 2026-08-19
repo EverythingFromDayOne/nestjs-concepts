@@ -13,6 +13,10 @@
 //   3. class-validator validate(), no opts  : REJECTED
 //   4. class-validator, explicit false      : ACCEPTED
 
+import { createRequire } from 'node:module';
+
+// .mjs is ESM; the appendix is CommonJS. createRequire keeps the probe body intact.
+const require = createRequire(import.meta.url);
 require('reflect-metadata');
 const { ValidationPipe } = require('@nestjs/common');
 const { validate } = require('class-validator');
