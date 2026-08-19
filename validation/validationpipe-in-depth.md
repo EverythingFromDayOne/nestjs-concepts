@@ -116,9 +116,11 @@ The spread comes **after** the literal. A caller passing `new ValidationPipe({ f
 
 So inside a Nest application the folk wisdom is correct: **a nested DTO with no `@Type()` is not validated at all.** Invalid nested data reaches the handler silently. That is a validation bypass, not a cosmetic issue, and it's the strongest argument in the corpus for the `@Type()`-on-every-nested-property rule.
 
-**Commonly confused with `whitelist` / `forbidNonWhitelisted`.** `forbidUnknownValues` is not a check on extra properties. It fires when the *target constructor* has no validation metadata at all — an undecorated class, a nested object that `plainToInstance` never instantiated, a `groups` selection that excludes every constraint. Extra keys on an otherwise-decorated DTO are `whitelist` (strip them) and `forbidNonWhitelisted` (400 instead). Mixing the two is how most people arrive at this option from the wrong direction.
-
 You can set `forbidUnknownValues: true` explicitly. Do it deliberately: it also makes the pipe reject anything else it can't find metadata for, which is the behaviour you want and may surface payloads that used to pass.
+
+### Commonly confused with `whitelist` / `forbidNonWhitelisted`
+
+`forbidUnknownValues` is not a check on extra properties. It fires when the target carries no validation metadata at all — an undecorated class, or a `groups` selection matching no constraint. Rejecting extra properties is `whitelist` plus `forbidNonWhitelisted`, a separate mechanism; the whitelist interaction is [article 16 §Step 4](./dtos-and-class-validator.md#step-4--the-whitelist-interaction). The name invites the confusion, and setting `forbidUnknownValues: true` expecting extra fields to be rejected will produce no such behaviour.
 
 ### `transformPrimitive` coerces without validating
 
