@@ -12,7 +12,6 @@ related:
   - request-lifecycle/pipes
   - request-lifecycle/exception-filters
   - foundations/decorators-and-metadata-reflection
-  - recipes/request-lifecycle/guard-vs-interceptor-ordering
 status:
   drafted: true
   reviewed: false

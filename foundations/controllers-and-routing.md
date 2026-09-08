@@ -11,7 +11,6 @@ related:
   - foundations/decorators-and-metadata-reflection
   - request-lifecycle/execution-order
   - validation/dtos-and-class-validator
-  - recipes/request-lifecycle/route-shadowed-by-a-param
 status:
   drafted: true
   reviewed: false

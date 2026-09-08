@@ -11,7 +11,6 @@ related:
   - foundations/decorators-and-metadata-reflection
   - validation/dtos-and-class-validator
   - validation/validationpipe-in-depth
-  - recipes/validation/dto-silently-not-validated
 status:
   drafted: true
   reviewed: false

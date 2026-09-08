@@ -11,7 +11,6 @@ related:
   - validation/serialization-and-response-shaping
   - foundations/decorators-and-metadata-reflection
   - foundations/configuration-and-environment
-  - recipes/validation/nested-dto-not-validated
 status:
   drafted: true
   reviewed: false

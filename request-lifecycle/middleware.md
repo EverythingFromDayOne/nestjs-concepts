@@ -11,7 +11,6 @@ related:
   - request-lifecycle/exception-filters
   - foundations/controllers-and-routing
   - foundations/scopes-and-lifetimes
-  - recipes/request-lifecycle/middleware-timing-measures-nothing
 status:
   drafted: true
   reviewed: false

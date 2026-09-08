@@ -11,7 +11,6 @@ related:
   - request-lifecycle/interceptors
   - request-lifecycle/exception-filters
   - foundations/decorators-and-metadata-reflection
-  - recipes/request-lifecycle/getting-metadata-inside-a-filter
 status:
   drafted: true
   reviewed: false

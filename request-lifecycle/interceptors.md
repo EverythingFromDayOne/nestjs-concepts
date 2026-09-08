@@ -11,7 +11,6 @@ related:
   - request-lifecycle/exception-filters
   - validation/serialization-and-response-shaping
   - performance/caching
-  - recipes/request-lifecycle/interceptor-ran-the-handler-twice
 status:
   drafted: true
   reviewed: false

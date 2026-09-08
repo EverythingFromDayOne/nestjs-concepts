@@ -11,7 +11,6 @@ related:
   - foundations/modules-and-the-module-graph
   - request-lifecycle/interceptors
   - performance/request-scope-cost
-  - recipes/di-and-modules/request-scope-bubbling
 status:
   drafted: true
   reviewed: false

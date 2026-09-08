@@ -13,7 +13,6 @@ related:
   - request-lifecycle/pipes
   - validation/dtos-and-class-validator
   - validation/validationpipe-in-depth
-  - recipes/di-and-modules/nest-cant-resolve-dependencies
 status:
   drafted: true
   reviewed: false
