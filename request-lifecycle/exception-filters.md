@@ -11,7 +11,6 @@ related:
   - request-lifecycle/guards
   - request-lifecycle/pipes
   - observability/logging
-  - recipes/request-lifecycle/filter-swallowed-the-error
 status:
   drafted: true
   reviewed: false

@@ -10,7 +10,6 @@ related:
   - foundations/custom-providers-and-injection-tokens
   - foundations/bootstrap-and-lifecycle-hooks
   - architecture/dynamic-modules
-  - recipes/di-and-modules/circular-dependency
 status:
   drafted: true
   reviewed: false

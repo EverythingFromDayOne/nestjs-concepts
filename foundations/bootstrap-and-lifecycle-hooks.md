@@ -11,7 +11,6 @@ related:
   - foundations/configuration-and-environment
   - foundations/scopes-and-lifetimes
   - observability/graceful-shutdown
-  - recipes/deployment/shutdown-drops-in-flight-requests
 status:
   drafted: true
   reviewed: false

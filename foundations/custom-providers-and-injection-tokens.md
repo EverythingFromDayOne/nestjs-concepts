@@ -11,7 +11,6 @@ related:
   - foundations/scopes-and-lifetimes
   - foundations/configuration-and-environment
   - architecture/dynamic-modules
-  - recipes/di-and-modules/nest-cant-resolve-dependencies
 status:
   drafted: true
   reviewed: false

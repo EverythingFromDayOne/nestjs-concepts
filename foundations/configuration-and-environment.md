@@ -11,7 +11,6 @@ related:
   - foundations/bootstrap-and-lifecycle-hooks
   - validation/dtos-and-class-validator
   - architecture/dynamic-modules
-  - recipes/deployment/config-validated-too-late
 status:
   drafted: true
   reviewed: false

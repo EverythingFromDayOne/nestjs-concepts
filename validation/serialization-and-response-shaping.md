@@ -11,7 +11,6 @@ related:
   - request-lifecycle/interceptors
   - request-lifecycle/execution-order
   - foundations/typescript-for-nest
-  - recipes/validation/password-leaked-in-the-response
 status:
   drafted: true
   reviewed: false

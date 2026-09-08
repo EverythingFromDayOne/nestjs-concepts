@@ -10,7 +10,6 @@ related:
   - request-lifecycle/pipes
   - validation/serialization-and-response-shaping
   - request-lifecycle/exception-filters
-  - recipes/validation/nested-dto-not-validated
 status:
   drafted: true
   reviewed: false

@@ -10,7 +10,6 @@ related:
   - foundations/controllers-and-routing
   - request-lifecycle/guards
   - request-lifecycle/execution-context-and-reflector
-  - recipes/di-and-modules/nest-cant-resolve-dependencies
 status:
   drafted: true
   reviewed: false

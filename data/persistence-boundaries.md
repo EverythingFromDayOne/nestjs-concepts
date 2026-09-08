@@ -12,7 +12,6 @@ related:
   - foundations/modules-and-the-module-graph
   - foundations/scopes-and-lifetimes
   - validation/serialization-and-response-shaping
-  - recipes/data-access/repository-leaked-orm-types
 status:
   drafted: true
   reviewed: false

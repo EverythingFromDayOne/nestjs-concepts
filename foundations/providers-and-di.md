@@ -10,7 +10,6 @@ related:
   - foundations/custom-providers-and-injection-tokens
   - foundations/decorators-and-metadata-reflection
   - foundations/scopes-and-lifetimes
-  - recipes/di-and-modules/nest-cant-resolve-dependencies
 status:
   drafted: true
   reviewed: false
