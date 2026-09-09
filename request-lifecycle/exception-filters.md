@@ -129,7 +129,7 @@ public handleUnknownError(exception, host, applicationRef) {
 
 Five things worth having in your head:
 
-- **`HttpException`s are never logged.** The `logger.error` call lives only in `handleUnknownError`. Every 400, 401, 403, 404, and 409 your application produces is silent by default. If you want them, that's [logging](../observability/logging.md) work — or an interceptor's `catchError`.
+- **`HttpException`s are never logged.** The `logger.error` call lives only in `handleUnknownError`. Every 400, 401, 403, 404, and 409 your application produces is silent by default. If you want them, that's ◌ _logging_ work — or an interceptor's `catchError`.
 - **`getResponse()` decides the body.** If a custom exception passes an **object** to `super()`, that object *is* the response body, verbatim. A string gets wrapped as `{ statusCode, message }`. This is the cheapest way to control error shape and it needs no filter at all.
 - **Unknown errors get `isHttpError` sniffing.** Anything shaped `{ statusCode, message }` — which is what the `http-errors` library produces, and therefore what `body-parser` throws for malformed JSON or an oversized payload — keeps its own status instead of becoming a 500. That's why a broken JSON body returns 400 rather than 500 even though nothing in your code threw an `HttpException`. **Your own filter has to preserve that**, and it's easy not to: a filter that nests `getResponse()` under its own `message` field turns an already-structured body into `{"statusCode":400,"message":{"message":"…","error":"Bad Request","statusCode":400}}`. Mirror what the built-in does — object payloads become the body, strings get wrapped.
 - **`isHeadersSent` guards both paths.** If the response has already started — a `@Res()` handler that replied, a stream mid-flight — the filter calls `end()` instead of `reply()`. It cannot rewrite what's already gone. This is the mechanism behind "my filter didn't change the response" on handlers that own their own response ([article 03](../foundations/controllers-and-routing.md#step-4--the-res-trap)).
@@ -500,7 +500,7 @@ Enumerated from `packages/common/exceptions/index.ts` @ v11.1.28, so this is the
 
 Plus `HttpException` itself for a status with no dedicated class, and `IntrinsicException` — which is not a status at all but the marker that suppresses the default error log.
 
-The ones worth knowing exist because they're reached for too rarely: **412 `PreconditionFailed`** for optimistic-concurrency conflicts on `If-Match`, **422 `UnprocessableEntity`** for a well-formed body that fails a *business* rule rather than a shape rule, and **503 `ServiceUnavailable`** for a dependency being down — which is the honest status during a [graceful shutdown](../observability/graceful-shutdown.md) drain, rather than letting requests fail as 500s.
+The ones worth knowing exist because they're reached for too rarely: **412 `PreconditionFailed`** for optimistic-concurrency conflicts on `If-Match`, **422 `UnprocessableEntity`** for a well-formed body that fails a *business* rule rather than a shape rule, and **503 `ServiceUnavailable`** for a dependency being down — which is the honest status during a ◌ _graceful shutdown_ drain, rather than letting requests fail as 500s.
 
 ## Common mistakes
 
@@ -554,8 +554,8 @@ The `catch(exception, host)` contract is unchanged. The refinements are all in t
 - [Interceptors](./interceptors.md#step-3--where-error-logging-belongs) — where error observability belongs instead
 - [Guards](./guards.md#step-2--throw-to-say-what-happened) — throwing to choose the status
 - [Pipes](./pipes.md) — validation failures, which are catchable by interceptors on their way here
-- [Logging](../observability/logging.md) — structured logging, and making 4xx visible
-- [Recipe: my filter swallowed the error](../recipes/request-lifecycle/filter-swallowed-the-error.md)
+- ◌ _Logging_ — structured logging, and making 4xx visible
+- ◌ _Recipe: my filter swallowed the error_
 
 ## References
 

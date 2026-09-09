@@ -403,7 +403,7 @@ curl -i -X DELETE localhost:3000/products/2   # expect 204, empty body
 curl -i localhost:3000/products/export        # expect the CSV content type
 ```
 
-The honest gap: none of this is automated. A test that asserts `/products/featured` reaches the right handler needs the HTTP layer, which is [end-to-end testing](../testing/integration-and-e2e-with-supertest.md). Until that article, the boot log is the check, and reading it after adding any route is the discipline.
+The honest gap: none of this is automated. A test that asserts `/products/featured` reaches the right handler needs the HTTP layer, which is ◌ _end-to-end testing_. Until that article, the boot log is the check, and reading it after adding any route is the discipline.
 
 ## Real-world patterns
 
@@ -506,7 +506,7 @@ The routing surface is stable; the **path grammar** is what changed. Nest 11 mad
 - [Modules and the module graph](./modules-and-the-module-graph.md) — why a controller belongs to exactly one module
 - [Execution order](../request-lifecycle/execution-order.md) — what runs before and after a handler
 - [DTOs and class-validator](../validation/dtos-and-class-validator.md) — giving `@Body()` a shape and a guarantee
-- [Recipe: my route returns 404 but it's clearly declared](../recipes/request-lifecycle/route-shadowed-by-a-param.md)
+- ◌ _Recipe: my route returns 404 but it's clearly declared_
 
 ## References
 

@@ -462,7 +462,7 @@ This is also the layer with the largest known change ahead. Nest 12 adds **Stand
 - [Decorators and metadata reflection](../foundations/decorators-and-metadata-reflection.md#how-it-works-under-the-hood) — where `metatype` comes from, and why it can be `Object`
 - [DTOs and class-validator](../validation/dtos-and-class-validator.md) — the classes pipes validate against
 - [ValidationPipe in depth](../validation/validationpipe-in-depth.md) — `whitelist`, `transform`, and the rest of the options
-- [Recipe: my DTO isn't being validated](../recipes/validation/dto-silently-not-validated.md)
+- ◌ _Recipe: my DTO isn't being validated_
 
 ## References
 

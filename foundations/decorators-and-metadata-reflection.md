@@ -473,7 +473,7 @@ This is the article most exposed to Nest 12's move to ESM, since decorator emit 
 - [Controllers and routing](./controllers-and-routing.md) — route metadata written onto the handler function
 - [Guards](../request-lifecycle/guards.md) — the usual consumer of `@Roles()`-style metadata
 - [Execution context and Reflector](../request-lifecycle/execution-context-and-reflector.md) — where `[handler, class]` targets come from
-- [Recipe: "Nest can't resolve dependencies of…"](../recipes/di-and-modules/nest-cant-resolve-dependencies.md)
+- ◌ _Recipe: "Nest can't resolve dependencies of…"_
 
 ## References
 

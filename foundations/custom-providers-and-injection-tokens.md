@@ -446,8 +446,8 @@ The four forms have been stable. The refinement worth knowing is the `inject` ar
 - [Modules and the module graph](./modules-and-the-module-graph.md) — exporting a token so consumers can see it
 - [Scopes and lifetimes](./scopes-and-lifetimes.md) — what a request-scoped `useClass` propagates
 - [Configuration and environment](./configuration-and-environment.md) — the usual `inject` dependency of a factory
-- [Dynamic modules](../architecture/dynamic-modules.md) — `forRoot`/`forFeature` built on these forms
-- [Recipe: "Nest can't resolve dependencies of…"](../recipes/di-and-modules/nest-cant-resolve-dependencies.md)
+- ◌ _Dynamic modules_ — `forRoot`/`forFeature` built on these forms
+- ◌ _Recipe: "Nest can't resolve dependencies of…"_
 
 ## References
 

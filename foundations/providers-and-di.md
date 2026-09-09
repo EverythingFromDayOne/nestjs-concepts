@@ -640,7 +640,7 @@ One thing worth flagging for the near future rather than the past: this article'
 - [Custom providers and injection tokens](./custom-providers-and-injection-tokens.md) — the four provider forms in depth, async factories
 - [Decorators and metadata reflection](./decorators-and-metadata-reflection.md) — what the compiler emits and how Nest reads it
 - [Scopes and lifetimes](./scopes-and-lifetimes.md) — request and transient scope, and how non-static dependencies propagate
-- [Recipe: "Nest can't resolve dependencies of…"](../recipes/di-and-modules/nest-cant-resolve-dependencies.md) — reading the error message as a diagnostic
+- ◌ _Recipe: "Nest can't resolve dependencies of…"_ — reading the error message as a diagnostic
 
 ## References
 

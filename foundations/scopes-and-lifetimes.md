@@ -527,8 +527,8 @@ The three scopes have been stable; what has moved is the escape hatch. Durable p
 - [Custom providers and injection tokens](./custom-providers-and-injection-tokens.md#how-it-works-under-the-hood) — `useClass` inheriting the class's scope
 - [Modules and the module graph](./modules-and-the-module-graph.md) — where a provider is registered, and why that matters for resolution
 - [Interceptors](../request-lifecycle/interceptors.md) — enhancers and their scopes
-- [Request-scope cost](../performance/request-scope-cost.md) — measuring the throughput impact
-- [Recipe: request scope spread through my whole app](../recipes/di-and-modules/request-scope-bubbling.md)
+- ◌ _Request-scope cost_ — measuring the throughput impact
+- ◌ _Recipe: request scope spread through my whole app_
 
 ## References
 

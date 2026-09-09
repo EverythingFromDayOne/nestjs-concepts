@@ -285,7 +285,7 @@ export class TinyCacheInterceptor implements NestInterceptor {
 
 Hit the same URL twice with a logging handler and it logs once. The handler wasn't skipped by a flag or a return-early check — it was **never invoked**, because nothing subscribed to the deferred observable that would have invoked it.
 
-This is a demonstration, not a cache. An unbounded `Map` keyed by URL, with no TTL, no invalidation, and no awareness of the authenticated user, is a memory leak and a data-leak between users. Real caching is [article 50](../performance/caching.md); Nest's own `CacheInterceptor` is the same mechanism with those problems solved.
+This is a demonstration, not a cache. An unbounded `Map` keyed by URL, with no TTL, no invalidation, and no awareness of the authenticated user, is a memory leak and a data-leak between users. Real caching is ◌ _article 50_; Nest's own `CacheInterceptor` is the same mechanism with those problems solved.
 
 ### Step 5 — retry and timeout, and the trap in each
 
@@ -448,8 +448,8 @@ The `intercept(context, next)` shape hasn't changed; the machinery under it has 
 - [Exception filters](./exception-filters.md) — error response shape, and why only one runs
 - [Middleware](./middleware.md#real-world-patterns) — where an `AsyncLocalStorage` store is opened
 - [Serialization and response shaping](../validation/serialization-and-response-shaping.md) — `ClassSerializerInterceptor` and `@Exclude()`
-- [Caching](../performance/caching.md) — the real version of Step 4
-- [Recipe: my interceptor ran the handler twice](../recipes/request-lifecycle/interceptor-ran-the-handler-twice.md)
+- ◌ _Caching_ — the real version of Step 4
+- ◌ _Recipe: my interceptor ran the handler twice_
 
 ## References
 

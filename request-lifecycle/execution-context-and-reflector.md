@@ -439,7 +439,7 @@ The context surface has been stable, and the interesting history is in what it d
 - [Exception filters](./exception-filters.md#the-handler-is-wrapped-in-a-trycatch-that-discards-the-context) — why the filter host has neither
 - [Pipes](./pipes.md) — the layer with metadata but no context
 - [Decorators and metadata reflection](../foundations/decorators-and-metadata-reflection.md) — `Reflector` in full
-- [Recipe: getting metadata inside a filter](../recipes/request-lifecycle/getting-metadata-inside-a-filter.md)
+- ◌ _Recipe: getting metadata inside a filter_
 
 ## References
 

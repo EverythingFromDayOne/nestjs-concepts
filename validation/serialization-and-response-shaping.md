@@ -485,7 +485,7 @@ Nest 12's schema-first direction reaches this layer too: a serializer driven by 
 - [Execution order](../request-lifecycle/execution-order.md#how-it-works-under-the-hood) — why the post-phase unwinds inside-out
 - [Exception filters](../request-lifecycle/exception-filters.md) — error bodies, which the serializer never touches
 - [TypeScript for Nest](../foundations/typescript-for-nest.md#the-erasure-ledger) — why a return-type annotation protects nothing
-- [Recipe: a password leaked in the response](../recipes/validation/password-leaked-in-the-response.md)
+- ◌ _Recipe: a password leaked in the response_
 
 ## References
 

@@ -447,7 +447,7 @@ Nest 12's **Standard Schema** support in `@Body()`/`@Query()` is an alternative 
 - [Serialization and response shaping](./serialization-and-response-shaping.md) — the outbound direction, and why `@Exclude()` doesn't belong on an inbound DTO
 - [Exception filters](../request-lifecycle/exception-filters.md#what-the-built-in-filter-actually-does) — why an object-carrying `HttpException` needs no filter
 - [Execution order](../request-lifecycle/execution-order.md#minimal-shapes) — `APP_PIPE` versus `useGlobalPipes`
-- [Recipe: my nested DTO isn't being validated](../recipes/validation/nested-dto-not-validated.md)
+- ◌ _Recipe: my nested DTO isn't being validated_
 
 ## References
 
