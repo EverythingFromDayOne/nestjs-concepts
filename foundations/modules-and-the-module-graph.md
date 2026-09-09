@@ -68,7 +68,7 @@ For a **static** module the reference is the class itself. A class is one object
 
 For a **dynamic** module the reference is the object literal returned by `forRoot()`. Two calls return two objects, so two tokens, so **two module instances**, each with its own copy of the providers inside — even if the options were identical. This is the real reason for the `forRoot()`-once-at-the-root convention. If you need content-based deduplication instead, `moduleIdGeneratorAlgorithm: 'deep-hash'` in the application options restores hashing over the module metadata; the cost is that a module's identity then depends on its options being serializable and stable.
 
-Dynamic modules are otherwise [article 41's](../architecture/dynamic-modules.md) subject. What matters here is the identity rule.
+Dynamic modules are otherwise ◌ _article 41's_ subject. What matters here is the identity rule.
 
 ### `exports` is one flat set, holding two kinds of thing
 
@@ -468,7 +468,7 @@ Each line names the token and the module being searched. If you see it looking i
 
 **Modules can inject providers; they cannot be injected.** A module class may take a constructor dependency — occasionally useful for wiring at startup — but a module class is not a provider and cannot be injected anywhere.
 
-**Circular module imports need `forwardRef()` on both sides**, and are usually a sign the boundary is wrong. When two modules genuinely need each other, the shared thing usually wants to be a third module. See [the circular dependency recipe](../recipes/di-and-modules/circular-dependency.md).
+**Circular module imports need `forwardRef()` on both sides**, and are usually a sign the boundary is wrong. When two modules genuinely need each other, the shared thing usually wants to be a third module. See ◌ _the circular dependency recipe_.
 
 ## API reference
 
@@ -558,8 +558,8 @@ The observable behaviour of `imports` and `exports` has been stable. Module **id
 - [Providers and dependency injection](./providers-and-di.md) — tokens, resolution order, and why file imports aren't DI edges
 - [Custom providers and injection tokens](./custom-providers-and-injection-tokens.md) — what goes in the `providers` array beyond class names
 - [Bootstrap and lifecycle hooks](./bootstrap-and-lifecycle-hooks.md) — when the graph is built and in what order instances come alive
-- [Dynamic modules](../architecture/dynamic-modules.md) — `forRoot`/`forFeature`, `ConfigurableModuleBuilder`
-- [Recipe: circular dependency between modules](../recipes/di-and-modules/circular-dependency.md) — `forwardRef()` and when to restructure instead
+- ◌ _Dynamic modules_ — `forRoot`/`forFeature`, `ConfigurableModuleBuilder`
+- ◌ _Recipe: circular dependency between modules_ — `forwardRef()` and when to restructure instead
 
 ## References
 

@@ -521,8 +521,8 @@ The package is on 4.x and the direction has been toward failing earlier and typi
 - [Modules and the module graph](./modules-and-the-module-graph.md#how-it-works-under-the-hood) — why `forRoot()` is called exactly once
 - [Bootstrap and lifecycle hooks](./bootstrap-and-lifecycle-hooks.md) — what runs after configuration is resolved
 - [DTOs and class-validator](../validation/dtos-and-class-validator.md) — the same decorators, applied to requests
-- [Dynamic modules](../architecture/dynamic-modules.md) — building your own `forRoot`/`forRootAsync`
-- [Recipe: config validated too late](../recipes/deployment/config-validated-too-late.md)
+- ◌ _Dynamic modules_ — building your own `forRoot`/`forRootAsync`
+- ◌ _Recipe: config validated too late_
 
 ## References
 

@@ -473,7 +473,7 @@ The practical rule: **a global filter is only a safety net for exceptions no mor
 
 The trace endpoint *is* the verification, and it's worth keeping in the demo — it answers "what actually runs here" faster than reading five files.
 
-What can't be verified yet is automated: driving the full pipeline in a test needs the HTTP layer, which is [end-to-end testing](../testing/integration-and-e2e-with-supertest.md). Until then:
+What can't be verified yet is automated: driving the full pipeline in a test needs the HTTP layer, which is ◌ _end-to-end testing_. Until then:
 
 ```bash
 curl 'localhost:3000/pipeline?value=ok'       # full path
@@ -572,7 +572,7 @@ The nesting has been stable; the binding surface around it has grown. The `APP_*
 - [Pipes](./pipes.md) — transformation and validation inside the chain
 - [Exception filters](./exception-filters.md) — winner-takes-all error formatting
 - [Decorators and metadata reflection](../foundations/decorators-and-metadata-reflection.md#how-it-works-under-the-hood) — how `@UseGuards()` stores its metadata
-- [Recipe: guard vs interceptor ordering](../recipes/request-lifecycle/guard-vs-interceptor-ordering.md)
+- ◌ _Recipe: guard vs interceptor ordering_
 
 ## References
 

@@ -470,7 +470,7 @@ Middleware has changed least of any layer, because it isn't Nest's own — it's 
 - [Exception filters](./exception-filters.md) — why only global filters catch middleware errors
 - [Controllers and routing](../foundations/controllers-and-routing.md#step-5--a-wildcard-under-express-5) — the same path-matching rules
 - [Scopes and lifetimes](../foundations/scopes-and-lifetimes.md#real-world-patterns) — `AsyncLocalStorage` as the alternative to request scope
-- [Recipe: middleware timing always logs 0 ms](../recipes/request-lifecycle/middleware-timing-measures-nothing.md)
+- ◌ _Recipe: middleware timing always logs 0 ms_
 
 ## References
 

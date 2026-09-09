@@ -105,14 +105,14 @@ This is not a mistake. It's one type, no mapper, no indirection, and the ORM's f
 
 ## Walkthrough — deciding, then drawing the line
 
-We start `demos/data/`. Worth noting: because this article is ORM-agnostic, **its demo needs no database** — an in-memory implementation exercises every claim here. The Postgres container arrives with [article 25](./typeorm-entities-and-relations.md).
+We start `demos/data/`. Worth noting: because this article is ORM-agnostic, **its demo needs no database** — an in-memory implementation exercises every claim here. The Postgres container arrives with ◌ _article 25_.
 
 ### Step 1 — the test for whether you need a port
 
 Three questions. If the answer to all three is no, stay with shape A.
 
 1. **Will the persistence technology change?** Not "could it" — will it. A planned migration, a second data source, or a library you already distrust. Hypothetical portability has a poor track record.
-2. **Do you need to test the domain logic without a database?** If the interesting logic is `if (order.total > limit)`, a fake repository makes that a millisecond unit test. If the interesting logic is the query itself, a fake tests nothing and you want [a real database](../testing/testing-against-a-real-database.md).
+2. **Do you need to test the domain logic without a database?** If the interesting logic is `if (order.total > limit)`, a fake repository makes that a millisecond unit test. If the interesting logic is the query itself, a fake tests nothing and you want ◌ _a real database_.
 3. **Does the same data have more than one consumer with different needs?** A read model for a dashboard and a write model for an aggregate diverge naturally, and a single ORM entity serving both accumulates fields for both.
 
 The dishonest version of this decision is adding a port "for testability" and then writing a fake so faithful to the ORM that maintaining it costs more than a test container. If your fake needs a query planner, you needed the database.
@@ -209,7 +209,7 @@ async placeOrder(dto: PlaceOrderDto): Promise<Order> {
 }
 ```
 
-That `tx` parameter is the design question this article can pose but not answer, because every ORM answers it differently — an explicit handle, an ambient async-context transaction, or a decorator. [Article 20](./transactions-and-isolation.md) covers the semantics and [article 27](./typeorm-transactions-in-nest.md) the TypeORM mechanics. What's fixed regardless:
+That `tx` parameter is the design question this article can pose but not answer, because every ORM answers it differently — an explicit handle, an ambient async-context transaction, or a decorator. ◌ _Article 20_ covers the semantics and ◌ _article 27_ the TypeORM mechanics. What's fixed regardless:
 
 - **A transaction is a property of a use case**, not of a repository call.
 - **It must be visible in the signature or in a store**, never implied. An implicit transaction that silently isn't one is the failure at the top of this step.
@@ -262,7 +262,7 @@ const moduleRef = await Test.createTestingModule({
 
 No container, no schema, no fixtures. And note what the fake *doesn't* do: no filtering by `createdAfter`, because nothing under test needs it yet. A fake that grows toward being a database is the signal from Step 1 that you should have used one.
 
-**What this does not test** — and pretending otherwise is how a green suite ships a broken query: the actual SQL, the indexes, the isolation level, cascade behaviour, and the N+1 in [article 21](./the-n-plus-one-problem.md). Those need [a real database](../testing/testing-against-a-real-database.md). A port makes *domain* logic cheap to test; it does not make data access tested.
+**What this does not test** — and pretending otherwise is how a green suite ships a broken query: the actual SQL, the indexes, the isolation level, cascade behaviour, and the N+1 in ◌ _article 21_. Those need ◌ _a real database_. A port makes *domain* logic cheap to test; it does not make data access tested.
 
 ### Verify the loop
 
@@ -367,14 +367,14 @@ The other shift is transactional. Ambient transaction context — `AsyncLocalSto
 
 ## See also
 
-- [Transactions and isolation](./transactions-and-isolation.md) — the semantics of the boundary drawn in Step 4
-- [The N+1 problem](./the-n-plus-one-problem.md) — what a fake repository will never show you
+- ◌ _Transactions and isolation_ — the semantics of the boundary drawn in Step 4
+- ◌ _The N+1 problem_ — what a fake repository will never show you
 - [Custom providers and injection tokens](../foundations/custom-providers-and-injection-tokens.md) — abstract class versus symbol, and the swap
 - [Modules and the module graph](../foundations/modules-and-the-module-graph.md#you-cannot-export-what-you-dont-have) — why omitting `exports` is enforcement
 - [Scopes and lifetimes](../foundations/scopes-and-lifetimes.md#how-it-works-under-the-hood) — why a request-scoped repository is contagious
 - [Serialization and response shaping](../validation/serialization-and-response-shaping.md#real-world-patterns) — the same boundary, outbound
-- [Testing against a real database](../testing/testing-against-a-real-database.md) — what the fake doesn't cover
-- [Recipe: my repository leaked ORM types](../recipes/data-access/repository-leaked-orm-types.md)
+- ◌ _Testing against a real database_ — what the fake doesn't cover
+- ◌ _Recipe: my repository leaked ORM types_
 
 ## References
 

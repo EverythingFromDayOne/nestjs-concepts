@@ -391,7 +391,7 @@ export class DrainService
 }
 ```
 
-The five-second sleep is a placeholder for the real thing, and the real thing belongs to [graceful shutdown](../observability/graceful-shutdown.md) — readiness endpoints, orchestrator `preStop` timing, and a bounded drain rather than a fixed sleep. What article 08 owns is the *placement*: drain in phase 2 while the socket is open, release resources in phase 3 after it's closed. Getting those backwards is the deploy-time "database outage" that isn't one.
+The five-second sleep is a placeholder for the real thing, and the real thing belongs to ◌ _graceful shutdown_ — readiness endpoints, orchestrator `preStop` timing, and a bounded drain rather than a fixed sleep. What article 08 owns is the *placement*: drain in phase 2 while the socket is open, release resources in phase 3 after it's closed. Getting those backwards is the deploy-time "database outage" that isn't one.
 
 ### Verify the loop
 
@@ -539,8 +539,8 @@ The hook set has been stable; the operational surface around it has filled in. `
 - [Modules and the module graph](./modules-and-the-module-graph.md) — the graph whose depth decides hook order
 - [Configuration and environment](./configuration-and-environment.md) — startup work you await is deploy latency you pay
 - [Scopes and lifetimes](./scopes-and-lifetimes.md#how-it-works-under-the-hood) — why scoped providers get no hooks
-- [Graceful shutdown](../observability/graceful-shutdown.md) — readiness, `preStop`, and bounded drains
-- [Recipe: shutdown drops in-flight requests](../recipes/deployment/shutdown-drops-in-flight-requests.md)
+- ◌ _Graceful shutdown_ — readiness, `preStop`, and bounded drains
+- ◌ _Recipe: shutdown drops in-flight requests_
 
 ## References
 

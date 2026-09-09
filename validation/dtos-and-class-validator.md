@@ -428,7 +428,7 @@ The largest change ahead is Nest 12's **Standard Schema** support in `@Body()` a
 - [Serialization and response shaping](./serialization-and-response-shaping.md) — the outbound half, and why it needs different classes
 - [Decorators and metadata reflection](../foundations/decorators-and-metadata-reflection.md) — how the decorators store what they store
 - [Configuration and environment](../foundations/configuration-and-environment.md#step-3--fail-the-boot-not-the-request) — the same libraries applied to `process.env`
-- [Recipe: my nested DTO isn't being validated](../recipes/validation/nested-dto-not-validated.md)
+- ◌ _Recipe: my nested DTO isn't being validated_
 
 ## References
 

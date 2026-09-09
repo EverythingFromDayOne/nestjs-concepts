@@ -397,7 +397,7 @@ That hand-built context is the honest version of guard testing: three methods is
 | `Reflector` | `@nestjs/core` | reads handler/class metadata; use `getAllAndOverride` for policy |
 | `UnauthorizedException` | `@nestjs/common` | 401 — unauthenticated |
 | `ForbiddenException` | `@nestjs/common` | 403 — authenticated and refused |
-| `AuthGuard('jwt')` | `@nestjs/passport` | Passport strategy as a guard — [article 30](../auth/authentication-strategies.md) |
+| `AuthGuard('jwt')` | `@nestjs/passport` | Passport strategy as a guard — ◌ _article 30_ |
 
 ## Common mistakes
 
@@ -451,8 +451,8 @@ That hand-built context is the honest version of guard testing: three methods is
 - [Interceptors](./interceptors.md) — the layer that cannot see a rejected request
 - [Exception filters](./exception-filters.md) — shaping what a rejection looks like to the client
 - [Execution context and Reflector](./execution-context-and-reflector.md) — the context surface in full
-- [Authorization, RBAC and policies](../auth/authorization-rbac-and-policies.md) — CASL and policy objects beyond role strings
-- [Recipe: my global guard locked out the login route](../recipes/auth/global-guard-locked-out-the-login-route.md)
+- ◌ _Authorization, RBAC and policies_ — CASL and policy objects beyond role strings
+- ◌ _Recipe: my global guard locked out the login route_
 
 ## References
 
